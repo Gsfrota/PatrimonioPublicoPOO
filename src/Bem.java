@@ -6,9 +6,7 @@ import java.util.Date;
 
 public class Bem {
     // Atributos
-    private String nomeBem;
-
-
+    private String nome;
     private int id;
     private String descricao;
     private String tipo;
@@ -20,15 +18,14 @@ public class Bem {
 
 
 
-    public Bem(String nomeBem, String descricao, String tipo,String dataRegistro){
+    public Bem(String nome, String descricao, String tipo,String dataRegistro){
         this.id = (int) (Math.random() * 1000); // Gera um ID aleatório para o bem
-        this.nomeBem = nomeBem;
+        this.nome = nome;
         this.descricao = descricao;
         this.tipo = tipo;
         this.situacao = "Novo bem";
         this.dataRegistro = dataRegistro;
-        System.out.printf("Novo bem %s criado!%nTipo: %s%nID: %d%nData da aquisição: %s%nSituação: %s%nDescrição: %s%n", 
-                          nomeBem, tipo, id, dataRegistro, situacao, descricao);
+       
 
     }
 
@@ -36,13 +33,16 @@ public class Bem {
 
    
 
-
+    @Override
+    public String toString(){
+        return String.format("Novo bem %s criado!%nTipo: %s%nID: %d%nData da aquisição: %s%nSituação: %s%nDescrição: %s%n", nome, tipo, id, dataRegistro, situacao, descricao);
+    }
     // Métodos
     public String getNomeBem() {
-        return nomeBem;
+        return nome;
     }
     public void setNomeBem(String nomeBem) {
-        this.nomeBem = nomeBem;
+        this.nome = nomeBem;
     }
     public int getId() {
         return id;

@@ -11,7 +11,19 @@ public class Instituicao{
 
 
 
+    public Instituicao(String nome, String cnpj){
+        this.id = (int) (Math.random() * 1000);
+        this.nome = nome;
+        this.cnpj = cnpj;
+        
+    }
 
+
+
+    @Override
+    public String toString(){
+        return String.format("Instituição %s cadastrada!", nome);
+    }
 
     
     // Métodos
