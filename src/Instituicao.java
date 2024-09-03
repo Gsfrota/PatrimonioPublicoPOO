@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Instituicao{
@@ -7,7 +8,7 @@ public class Instituicao{
     private String cnpj;
     private List<Setor> setores;
     private List<Usuario> usuarios;
-    private List<Bem> bens;
+    private List<Bem> bens = new ArrayList<>();
 
 
 
@@ -69,4 +70,40 @@ public class Instituicao{
         this.bens = bens;
     }
 
+
+    public Bem consultarBem(int id) {
+        for(Bem bem : bens){
+         if(bem.getId() == id){
+             return bem;
+ 
+         }
+        }
+        return null;
+     }
+ 
+     public void atualizarBem(Bem bemAtualizado) {
+        for(int i=0; i< bens.size();i++){
+            Bem bemExistente = bens.get(i);
+            if (bemExistente.getId() == bemAtualizado.getId()) {
+                bens.set(i, bemAtualizado);
+                System.out.println("Bem atualizado com sucesso: " + bemAtualizado.getNomeBem());
+                return;
+            }
+        }
+    }
+ 
+     public void transferirBem(Bem bem, Setor novoSetor) {
+         for(Setor setor: setores){
+            if(setor.getBens().contains(bem)){
+            setor.getBens().remove(bem);
+            System.out.println("Bem removido do setor: " + setor.getNome());
+                
+                break;
+            }
+         }
+         novoSetor.receberBem(bem);
+     }
+     
+ 
+ 
 }

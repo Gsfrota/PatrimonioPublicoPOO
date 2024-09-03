@@ -6,6 +6,10 @@ public class App {
 
         Instituicao instituicao1 = new Instituicao("UFC", "102312031");
         System.out.println(instituicao1);
-
+        boolean running = false;
+        while (running) {
+            System.out.println("---------------
+            ");
+        }
     }
 }
