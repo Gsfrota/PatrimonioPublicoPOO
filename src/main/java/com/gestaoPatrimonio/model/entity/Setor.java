@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class Setor extends Instituicao{
+public class Setor extends Instituicao {
     // Atributos
     private int id;
     private String nome;
@@ -50,13 +50,15 @@ public class Setor extends Instituicao{
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -64,6 +66,7 @@ public class Setor extends Instituicao{
     public String getSigla() {
         return sigla;
     }
+
     public void setSigla(String sigla) {
         this.sigla = sigla;
     }
@@ -71,6 +74,7 @@ public class Setor extends Instituicao{
     public Usuario getResponsavel() {
         return responsavel;
     }
+
     public void setResponsavel(Usuario responsavel) {
         this.responsavel = responsavel;
     }
@@ -78,6 +82,7 @@ public class Setor extends Instituicao{
     public String getLocalizacao() {
         return localizacao;
     }
+
     public void setLocalizacao(String localizacao) {
         this.localizacao = localizacao;
     }
@@ -85,6 +90,7 @@ public class Setor extends Instituicao{
     public String getContato() {
         return contato;
     }
+
     public void setContato(String contato) {
         this.contato = contato;
     }
