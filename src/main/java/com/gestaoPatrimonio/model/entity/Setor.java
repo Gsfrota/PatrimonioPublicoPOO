@@ -1,33 +1,35 @@
+package main.java.com.gestaoPatrimonio.model.entity;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class Setor extends Instituicao {
-    // Atributos
+public class Setor {
     private int id;
     private String nome;
     private String sigla;
     private Usuario responsavel;
     private String localizacao;
     private String contato;
+    private List<Bem> bens = new ArrayList<>();
 
-    // Métodos
+    // Adiciona um bem ao setor
     public void receberBem(Bem bem) {
-        // Implementação do método para receber um bem
         bens.add(bem);
         bem.setSituacao("Recebido");
         bem.setResponsavel(this.responsavel);
         System.out.println("Bem recebido: " + bem.getDescricao());
     }
 
+    // Remove um bem do setor
     public void devolverBem(Bem bem) {
-        // Implementação do método para devolver um bem
         bens.remove(bem);
         bem.setSituacao("Devolvido");
         bem.setResponsavel(null);
         System.out.println("Bem devolvido: " + bem.getDescricao());
     }
 
+    // Solicita a transferência de um bem para outro setor
     public void solicitarTransferenciaBem(Bem bem, Setor setor) {
-        // Implementação do método para solicitar transferência de um bem
         if (bens.contains(bem)) {
             bens.remove(bem);
             setor.receberBem(bem);
@@ -37,16 +39,17 @@ public class Setor extends Instituicao {
         }
     }
 
-    public void gerarRelatorios(Setor setor) {
-        // Implementação do método para gerar relatórios
-        System.out.println("Relatório do Setor: " + setor.getNome());
-        for (Bem bem : setor.getBens()) {
+    // Gera relatórios para o setor
+    public void gerarRelatorios() {
+        System.out.println("Relatório do Setor: " + nome);
+        for (Bem bem : bens) {
             System.out.println("ID: " + bem.getId() + ", Descrição: " + bem.getDescricao() +
                     ", Situação: " + bem.getSituacao() + ", Responsável: " +
                     (bem.getResponsavel() != null ? bem.getResponsavel().getNome() : "N/A"));
         }
     }
 
+    // Getters e Setters
     public int getId() {
         return id;
     }
@@ -95,5 +98,11 @@ public class Setor extends Instituicao {
         this.contato = contato;
     }
 
+    public List<Bem> getBens() {
+        return bens;
+    }
 
+    public void setBens(List<Bem> bens) {
+        this.bens = bens;
+    }
 }

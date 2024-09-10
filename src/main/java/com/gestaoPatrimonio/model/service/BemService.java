@@ -1,40 +1,52 @@
+package main.java.com.gestaoPatrimonio.model.service;
+
 import java.util.List;
 
+import main.java.com.gestaoPatrimonio.model.entity.Bem;
+import main.java.com.gestaoPatrimonio.model.entity.Setor;
+import main.java.com.gestaoPatrimonio.model.repository.BemRepository;
+
 public class BemService {
-    private BemRepository repository;
+    private BemRepository bemRepository;
 
-    public BemService(BemRepository repository) {
-        this.repository = repository;
+    public BemService(BemRepository bemRepository) {
+        this.bemRepository = bemRepository;
     }
 
-    public void registrarBem(Bem bem) {
-        // Temos que colocar aqui Validações adicionais podem ser feitas aqui
-        repository.save(bem);
+    // Adiciona um novo bem
+    public void adicionarBem(Bem bem) {
+        bemRepository.save(bem);
     }
 
-    public Bem consultarBem(int id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bem não encontrado"));
+    // Atualiza um bem existente
+    public void atualizarBem(Bem bemAtualizado) {
+        bemRepository.update(bemAtualizado);
     }
 
-    public void atualizarBem(Bem bem) {
-        repository.update(bem);
+    // Remove um bem por ID
+    public void removerBem(int id) {
+        bemRepository.delete(id);
     }
 
-    public void deletarBem(int id) {
-        repository.delete(id);
+    // Consulta um bem por ID
+    public Bem obterBemPorId(int id) {
+        return bemRepository.findById(id);
     }
 
-    public List<Bem> listarBens() {
-        return repository.findAll();
+    // Obtém todos os bens
+    public List<Bem> listarTodosBens() {
+        return bemRepository.findAll();
     }
 
-    public void transferirBem(Bem bem, Setor novoSetor) {
-        bem.setSetor(novoSetor);
-        repository.update(bem);
-    }
-
-    public List<Bem> listarBensPorSetor(Setor setor) {
-        return repository.findBySetor(setor);
+    // Transfere um bem para outro setor
+    public void transferirBem(int idBem, Setor novoSetor) {
+        Bem bem = obterBemPorId(idBem);
+        if (bem != null) {
+            bem.getSetor().solicitarTransferenciaBem(bem, novoSetor);
+            bem.setSetor(novoSetor);  // Atualiza o setor do bem
+            atualizarBem(bem);        // Atualiza o bem no repositório
+        } else {
+            System.out.println("Bem com ID " + idBem + " não encontrado.");
+        }
     }
 }

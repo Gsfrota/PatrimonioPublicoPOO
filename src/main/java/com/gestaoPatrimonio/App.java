@@ -1,3 +1,7 @@
+package main.java.com.gestaoPatrimonio;
+import main.java.com.gestaoPatrimonio.model.entity.Bem;
+import main.java.com.gestaoPatrimonio.model.entity.Instituicao;
+
 public class App {
     public static void main(String[] args) throws Exception {
 
@@ -8,8 +12,7 @@ public class App {
         System.out.println(instituicao1);
         boolean running = false;
         while (running) {
-            System.out.println("---------------
-                    ");
+            System.out.println("---------------");
         }
     }
 }

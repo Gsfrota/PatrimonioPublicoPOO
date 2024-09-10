@@ -1,66 +1,48 @@
+package main.java.com.gestaoPatrimonio.model.service;
+
+
+import java.util.List;
+import java.util.Optional;
+
+import main.java.com.gestaoPatrimonio.model.entity.Usuario;
+import main.java.com.gestaoPatrimonio.model.repository.UsuarioRepository;
+
 public class UsuarioService {
-    private UsuarioRepository repository;
 
-    public UsuarioService(UsuarioRepository repository) {
-        this.repository = repository;
+    private UsuarioRepository usuarioRepository;
+
+    public UsuarioService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
     }
 
-    public void criarUsuario(Usuario usuario) {
-        // Validações de negócio
-        if (usuario.getNome() == null || usuario.getNome().trim().isEmpty()) {
-            throw new IllegalArgumentException("Nome do usuário é obrigatório");
-        }
-        if (usuario.getLogin() == null || usuario.getLogin().trim().isEmpty()) {
-            throw new IllegalArgumentException("Login do usuário é obrigatório");
-        }
-        // Lógica adicional de negócio, se necessário
-        // Criptografar senha
-        usuario.setSenha(criptografarSenha(usuario.getSenha()));
-        repository.save(usuario);
+    // Adiciona um novo usuário
+    public void addUsuario(Usuario usuario) {
+        usuarioRepository.save(usuario);
     }
 
-    public Usuario buscarUsuario(int id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+    // Encontra um usuário pelo ID
+    public Optional<Usuario> getUsuarioById(int id) {
+        return usuarioRepository.findById(id);
     }
 
-    public void atualizarUsuario(Usuario usuario) {
-        // Validações de negócio
-        if (usuario.getId() == 0) {
-            throw new IllegalArgumentException("ID do usuário é obrigatório para atualização");
-        }
-        // Lógica adicional de negócio, se necessário
-        // Se a senha foi alterada, criptografar novamente
-        if (usuario.getSenha() != null && !usuario.getSenha().trim().isEmpty()) {
-            usuario.setSenha(criptografarSenha(usuario.getSenha()));
-        }
-        repository.update(usuario);
+    // Encontra todos os usuários
+    public List<Usuario> getAllUsuarios() {
+        return usuarioRepository.findAll();
     }
 
-    public void deletarUsuario(int id) {
-        // Verificar se o usuário pode ser deletado
-        repository.delete(id);
+    // Remove um usuário pelo ID
+    public void removeUsuarioById(int id) {
+        usuarioRepository.deleteById(id);
     }
 
+    // Encontra um usuário pelo login
+    public Optional<Usuario> getUsuarioByLogin(String login) {
+        return usuarioRepository.findByLogin(login);
+    }
+
+    // Autentica um usuário
     public boolean autenticarUsuario(String login, String senha) {
-        Usuario usuario = repository.findByLogin(login);
-        if (usuario == null) {
-            return false;
-        }
-        return verificarSenha(senha, usuario.getSenha());
-    }
-
-    public List<Usuario> listarUsuarios() {
-        return repository.findAll();
-    }
-
-    private String criptografarSenha(String senha) {
-        // Implementar lógica de criptografia (por exemplo, usando BCrypt)
-        return senha; // Placeholder
-    }
-
-    private boolean verificarSenha(String senhaDigitada, String senhaArmazenada) {
-        // Implementar lógica de verificação de senha
-        return senhaDigitada.equals(senhaArmazenada); // Placeholder
+        Optional<Usuario> usuario = usuarioRepository.findByLogin(login);
+        return usuario.isPresent() && usuario.get().getSenha().equals(senha);
     }
 }
