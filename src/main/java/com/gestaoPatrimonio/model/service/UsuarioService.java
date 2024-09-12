@@ -1,18 +1,23 @@
 package main.java.com.gestaoPatrimonio.model.service;
 
-
 import java.util.List;
 import java.util.Optional;
 
+import main.java.com.gestaoPatrimonio.model.entity.Bem;
+import main.java.com.gestaoPatrimonio.model.entity.Setor;
 import main.java.com.gestaoPatrimonio.model.entity.Usuario;
+import main.java.com.gestaoPatrimonio.model.repository.BemRepository;
 import main.java.com.gestaoPatrimonio.model.repository.UsuarioRepository;
 
 public class UsuarioService {
 
     private UsuarioRepository usuarioRepository;
+    private BemRepository bemRepository;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    // Construtor que recebe as dependências
+    public UsuarioService(UsuarioRepository usuarioRepository, BemRepository bemRepository) {
         this.usuarioRepository = usuarioRepository;
+        this.bemRepository = bemRepository;
     }
 
     // Adiciona um novo usuário
@@ -43,6 +48,29 @@ public class UsuarioService {
     // Autentica um usuário
     public boolean autenticarUsuario(String login, String senha) {
         Optional<Usuario> usuario = usuarioRepository.findByLogin(login);
-        return usuario.isPresent() && usuario.get().getSenha().equals(senha);
+        if (usuario.isPresent() && usuario.get().getSenha().equals(senha)) {
+            return true;
+        } else {
+            System.out.println("Falha na autenticação: Login ou senha incorretos.");
+            return false;
+        }
+    }
+
+    // Método para registrar um bem para um usuário
+    public void registrarBem(Usuario usuario, Bem bem) {
+        bem.setResponsavel(usuario);
+        bem.setSetor(usuario.getSetor());
+        bemRepository.save(bem);
+    }
+
+    // Método para atualizar um bem de um usuário
+    public void atualizarBem(Usuario usuario, Bem bem) {
+        bemRepository.update(bem);
+    }
+
+    // Método para transferir um bem de um usuário para outro setor
+    public void transferirBem(Usuario usuario, Bem bem, Setor novoSetor) {
+        bem.setSetor(novoSetor); // Atualiza o setor do bem
+        bemRepository.update(bem); // Atualiza o bem no repositório
     }
 }

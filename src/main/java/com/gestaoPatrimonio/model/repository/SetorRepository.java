@@ -3,6 +3,7 @@ package main.java.com.gestaoPatrimonio.model.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.java.com.gestaoPatrimonio.model.entity.Bem;
 import main.java.com.gestaoPatrimonio.model.entity.Setor;
 
 public class SetorRepository {
@@ -40,4 +41,46 @@ public class SetorRepository {
     public void delete(int id) {
         setores.removeIf(setor -> setor.getId() == id);
     }
+
+    // Adiciona um bem ao setor
+    public void receberBem(Setor setor, Bem bem) {
+        setor.getBens().add(bem);
+        bem.setSituacao("Recebido");
+        bem.setResponsavel(null);  // Assumindo que o responsável é definido em outro lugar
+        System.out.println("Bem recebido: " + bem.getDescricao());
+    }
+
+    // Remove um bem do setor
+    public void devolverBem(Setor setor, Bem bem) {
+        if (setor.getBens().remove(bem)) {
+            bem.setSituacao("Devolvido");
+            bem.setResponsavel(null);
+            System.out.println("Bem devolvido: " + bem.getDescricao());
+        } else {
+            System.out.println("Bem não encontrado no setor.");
+        }
+    }
+
+    // Solicita a transferência de um bem para outro setor
+    public void solicitarTransferenciaBem(Setor setorAtual, Setor setorNovo, Bem bem) {
+        if (setorAtual.getBens().remove(bem)) {
+            setorNovo.getBens().add(bem);
+            bem.setSetor(setorNovo);
+            bem.setSituacao("Transferido");
+            System.out.println("Transferência solicitada para o bem: " + bem.getDescricao());
+        } else {
+            System.out.println("Bem não encontrado no setor atual.");
+        }
+    }
+
+    // Gera relatórios para o setor
+    public void gerarRelatorios(Setor setor) {
+        System.out.println("Relatório do Setor: " + setor.getNome());
+        for (Bem bem : setor.getBens()) {
+            System.out.println("ID: " + bem.getId() + ", Descrição: " + bem.getDescricao() +
+                    ", Situação: " + bem.getSituacao() + ", Responsável: " +
+                    (bem.getResponsavel() != null ? bem.getResponsavel().getNome() : "N/A"));
+        }
+    }
+
 }

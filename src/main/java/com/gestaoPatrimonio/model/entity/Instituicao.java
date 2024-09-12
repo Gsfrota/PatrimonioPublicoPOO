@@ -5,26 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Instituicao {
-
     private int id;
-
     private String nome;
-
     private String cnpj;
 
     // Um para muitos com Setor
     private List<Setor> setores = new ArrayList<>();
-
-
+    // Um para muitos com Usuario
     private List<Usuario> usuarios = new ArrayList<>();
-
     // Um para muitos com Bem
     private List<Bem> bens = new ArrayList<>();
 
-    // Construtor vazio necessário para o JPA
-    public Instituicao() {}
-
     public Instituicao(String nome, String cnpj) {
+        this.id = (int) (Math.random() * 1000);
         this.nome = nome;
         this.cnpj = cnpj;
     }
@@ -35,6 +28,9 @@ public class Instituicao {
     }
 
     public void setId(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("ID deve ser maior que zero.");
+        }
         this.id = id;
     }
 
@@ -43,6 +39,9 @@ public class Instituicao {
     }
 
     public void setNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode ser vazio ou nulo.");
+        }
         this.nome = nome;
     }
 
@@ -51,6 +50,9 @@ public class Instituicao {
     }
 
     public void setCnpj(String cnpj) {
+        if (cnpj == null || cnpj.trim().isEmpty() || cnpj.length() != 14) {
+            throw new IllegalArgumentException("CNPJ inválido. Deve ter 14 dígitos.");
+        }
         this.cnpj = cnpj;
     }
 
@@ -59,6 +61,9 @@ public class Instituicao {
     }
 
     public void setSetores(List<Setor> setores) {
+        if (setores == null || setores.isEmpty()) {
+            throw new IllegalArgumentException("A lista de setores não pode ser nula ou vazia.");
+        }
         this.setores = setores;
     }
 
@@ -67,6 +72,9 @@ public class Instituicao {
     }
 
     public void setUsuarios(List<Usuario> usuarios) {
+        if (usuarios == null || usuarios.isEmpty()) {
+        throw new IllegalArgumentException("A lista de usuários não pode ser nula ou vazia.");
+    }
         this.usuarios = usuarios;
     }
 
@@ -75,40 +83,10 @@ public class Instituicao {
     }
 
     public void setBens(List<Bem> bens) {
+        if (bens == null || bens.isEmpty()) {
+            throw new IllegalArgumentException("A lista de bens não pode ser nula ou vazia.");
+        }
         this.bens = bens;
-    }
-
-    // Métodos para manipulação dos bens
-    public Bem consultarBem(int id) {
-        for (Bem bem : bens) {
-            if (bem.getId() == id) {
-                return bem;
-            }
-        }
-        return null;
-    }
-
-    public void atualizarBem(Bem bemAtualizado) {
-        for (int i = 0; i < bens.size(); i++) {
-            Bem bemExistente = bens.get(i);
-            if (bemExistente.getId() == bemAtualizado.getId()) {
-                bens.set(i, bemAtualizado);
-                System.out.println("Bem atualizado com sucesso: " + bemAtualizado.getNomeBem());
-                return;
-            }
-        }
-    }
-    
-
-    public void transferirBem(Bem bem, Setor novoSetor) {
-        for (Setor setor : setores) {
-            if (setor.getBens().contains(bem)) {
-                setor.getBens().remove(bem);
-                System.out.println("Bem removido do setor: " + setor.getNome());
-                break;
-            }
-        }
-        novoSetor.receberBem(bem);
     }
 
     @Override

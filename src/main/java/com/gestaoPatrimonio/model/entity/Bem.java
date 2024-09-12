@@ -21,12 +21,15 @@ public class Bem {
         this.situacao = "Novo bem";
     }
 
-    // Getters e Setters
+    // Metodos Getters e Setters
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("ID inválido. Deve ser maior que zero.");
+        }
         this.id = id;
     }
 
@@ -35,6 +38,9 @@ public class Bem {
     }
 
     public void setNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode ser vazio.");
+        }
         this.nome = nome;
     }
 
@@ -43,6 +49,9 @@ public class Bem {
     }
 
     public void setDescricao(String descricao) {
+        if (descricao == null || descricao.trim().isEmpty()) {
+            throw new IllegalArgumentException("Descrição não pode ser vazia.");
+        }
         this.descricao = descricao;
     }
 
@@ -51,6 +60,9 @@ public class Bem {
     }
 
     public void setTipo(String tipo) {
+        if (tipo == null || tipo.trim().isEmpty()) {
+            throw new IllegalArgumentException("Tipo não pode ser vazio.");
+        }
         this.tipo = tipo;
     }
 
@@ -59,6 +71,9 @@ public class Bem {
     }
 
     public void setValorAquisicao(float valorAquisicao) {
+        if (valorAquisicao <= 0) {
+            throw new IllegalArgumentException("Valor de aquisição deve ser maior que zero.");
+        }
         this.valorAquisicao = valorAquisicao;
     }
 
@@ -67,6 +82,9 @@ public class Bem {
     }
 
     public void setDataRegistro(String dataRegistro) {
+        if (dataRegistro == null || dataRegistro.trim().isEmpty()) {
+            throw new IllegalArgumentException("Data de registro não pode ser vazia.");
+        }
         this.dataRegistro = dataRegistro;
     }
 
@@ -75,6 +93,9 @@ public class Bem {
     }
 
     public void setSituacao(String situacao) {
+        if (situacao == null || situacao.trim().isEmpty()) {
+            throw new IllegalArgumentException("Situação não pode ser vazia.");
+        }
         this.situacao = situacao;
     }
 
@@ -83,6 +104,9 @@ public class Bem {
     }
 
     public void setResponsavel(Usuario responsavel) {
+        if (responsavel == null) {
+            throw new IllegalArgumentException("Responsável não pode ser nulo.");
+        }
         this.responsavel = responsavel;
     }
 
@@ -91,25 +115,10 @@ public class Bem {
     }
 
     public void setSetor(Setor setor) {
+        if (setor == null) {
+            throw new IllegalArgumentException("Setor não pode ser nulo.");
+        }
         this.setor = setor;
-    }
-
-    // Métodos
-    public void registrarBem() {
-        // Implementação do método para registrar um bem
-    }
-
-    public Bem consultarBem(int id) {
-        // Implementação do método para consultar um bem
-        return null; 
-    }
-
-    public void atualizarBem(Bem bem) {
-        // Implementação do método para atualizar um bem
-    }
-
-    public void transferirBem(Setor setor) {
-        // Implementação do método para transferir um bem
     }
 
     public String getNomeBem() {

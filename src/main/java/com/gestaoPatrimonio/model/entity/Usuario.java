@@ -11,42 +11,13 @@ public class Usuario {
     private String perfil;
     private Setor setor;
 
-    public Usuario(String nome, String login, String senha, String perfil, Setor setor) {
+    public Usuario(String nome, String login, String senha, Setor setor) {
         this.id = idCounter++;
         this.nome = nome;
         this.login = login;
         this.senha = senha;
-        this.perfil = perfil;
+        //this.perfil = perfil;
         this.setor = setor;
-    }
-
-    // Métodos
-    public void acessarSistema(String login, String senha) {
-        // Implementar lógica de autenticação
-    }
-
-    public void cadastrarUsuario(String login, String senha, String nome, Setor setor) {
-        this.login = login;
-        this.senha = senha;
-        this.nome = nome;
-        this.setor = setor;
-    }
-
-    // Método para validar o login
-    // private boolean validarLogin(String login) {
-    //     return login != null && !login.trim().isEmpty();
-    // }
-
-    public void registrarBem(Bem bem) {
-        // Implementação do método para registrar um bem
-    }
-
-    public void atualizarBem(Bem bem) {
-        // Implementação do método para atualizar um bem
-    }
-
-    public void transferirBem(Bem bem, Setor setor) {
-        // Implementação do método para transferir um bem
     }
 
     // Getters e Setters
@@ -55,6 +26,9 @@ public class Usuario {
     }
 
     public void setId(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("ID deve ser maior que zero.");
+        }
         this.id = id;
     }
 
@@ -63,6 +37,9 @@ public class Usuario {
     }
 
     public void setNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode ser nulo ou vazio.");
+        }
         this.nome = nome;
     }
 
@@ -71,6 +48,9 @@ public class Usuario {
     }
 
     public void setLogin(String login) {
+        if (login == null || login.trim().isEmpty()) {
+            throw new IllegalArgumentException("Login não pode ser nulo ou vazio.");
+        }
         this.login = login;
     }
 
@@ -79,6 +59,9 @@ public class Usuario {
     }
 
     public void setSenha(String senha) {
+        if (senha == null || senha.length() < 6) {
+            throw new IllegalArgumentException("Senha deve ter pelo menos 6 caracteres.");
+        }
         this.senha = senha;
     }
 
@@ -87,6 +70,9 @@ public class Usuario {
     }
 
     public void setPerfil(String perfil) {
+        if (perfil == null || perfil.trim().isEmpty()) {
+            throw new IllegalArgumentException("Perfil não pode ser nulo ou vazio.");
+        }
         this.perfil = perfil;
     }
 
@@ -95,6 +81,9 @@ public class Usuario {
     }
 
     public void setSetor(Setor setor) {
+        if (setor == null) {
+            throw new IllegalArgumentException("Setor não pode ser nulo.");
+        }
         this.setor = setor;
     }
 }

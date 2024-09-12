@@ -12,41 +12,13 @@ public class Setor {
     private String contato;
     private List<Bem> bens = new ArrayList<>();
 
-    // Adiciona um bem ao setor
-    public void receberBem(Bem bem) {
-        bens.add(bem);
-        bem.setSituacao("Recebido");
-        bem.setResponsavel(this.responsavel);
-        System.out.println("Bem recebido: " + bem.getDescricao());
-    }
-
-    // Remove um bem do setor
-    public void devolverBem(Bem bem) {
-        bens.remove(bem);
-        bem.setSituacao("Devolvido");
-        bem.setResponsavel(null);
-        System.out.println("Bem devolvido: " + bem.getDescricao());
-    }
-
-    // Solicita a transferência de um bem para outro setor
-    public void solicitarTransferenciaBem(Bem bem, Setor setor) {
-        if (bens.contains(bem)) {
-            bens.remove(bem);
-            setor.receberBem(bem);
-            System.out.println("Transferência solicitada para o bem: " + bem.getDescricao());
-        } else {
-            System.out.println("Bem não encontrado no setor atual.");
-        }
-    }
-
-    // Gera relatórios para o setor
-    public void gerarRelatorios() {
-        System.out.println("Relatório do Setor: " + nome);
-        for (Bem bem : bens) {
-            System.out.println("ID: " + bem.getId() + ", Descrição: " + bem.getDescricao() +
-                    ", Situação: " + bem.getSituacao() + ", Responsável: " +
-                    (bem.getResponsavel() != null ? bem.getResponsavel().getNome() : "N/A"));
-        }
+    public Setor(String nome, String sigla, Usuario responsavel, String localizacao, String contato) {
+        this.id = (int) (Math.random() * 1000);
+        this.setNome(nome);
+        this.setSigla(sigla);
+        this.setResponsavel(responsavel);
+        this.setLocalizacao(localizacao);
+        this.setContato(contato);
     }
 
     // Getters e Setters
@@ -55,6 +27,9 @@ public class Setor {
     }
 
     public void setId(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("ID deve ser maior que zero.");
+        }
         this.id = id;
     }
 
@@ -63,6 +38,9 @@ public class Setor {
     }
 
     public void setNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode ser vazio ou nulo.");
+        }
         this.nome = nome;
     }
 
@@ -71,6 +49,9 @@ public class Setor {
     }
 
     public void setSigla(String sigla) {
+        if (sigla == null || sigla.trim().isEmpty()) {
+            throw new IllegalArgumentException("Sigla não pode ser vazia ou nula.");
+        }
         this.sigla = sigla;
     }
 
@@ -79,6 +60,9 @@ public class Setor {
     }
 
     public void setResponsavel(Usuario responsavel) {
+        if (responsavel == null) {
+            throw new IllegalArgumentException("Responsável não pode ser nulo.");
+        }
         this.responsavel = responsavel;
     }
 
@@ -87,6 +71,9 @@ public class Setor {
     }
 
     public void setLocalizacao(String localizacao) {
+        if (localizacao == null || localizacao.trim().isEmpty()) {
+            throw new IllegalArgumentException("Localização não pode ser vazia ou nula.");
+        }
         this.localizacao = localizacao;
     }
 
@@ -95,6 +82,9 @@ public class Setor {
     }
 
     public void setContato(String contato) {
+        if (contato == null || contato.trim().isEmpty()) {
+            throw new IllegalArgumentException("Contato não pode ser vazio ou nulo.");
+        }
         this.contato = contato;
     }
 
@@ -103,6 +93,9 @@ public class Setor {
     }
 
     public void setBens(List<Bem> bens) {
+        if (bens == null || bens.isEmpty()) {
+            throw new IllegalArgumentException("A lista de bens não pode ser nula ou vazia.");
+        }
         this.bens = bens;
     }
 }

@@ -5,11 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import main.java.com.gestaoPatrimonio.model.entity.Setor;
 import main.java.com.gestaoPatrimonio.model.entity.Usuario;
 
 public class UsuarioRepository {
 
     private List<Usuario> usuarios = new ArrayList<>();
+
+    // Método para cadastrar um novo usuário
+    public void cadastrarUsuario(String login, String senha, String nome, Setor setor) {
+        Usuario novoUsuario = new Usuario(nome, login, senha, setor);
+        save(novoUsuario);  // Salva o usuário na lista
+    }
 
     // Adiciona um usuário ao repositório
     public void save(Usuario usuario) {
@@ -39,4 +46,7 @@ public class UsuarioRepository {
                        .filter(usuario -> usuario.getLogin().equalsIgnoreCase(login))
                        .findFirst();
     }
+
 }
+
+

@@ -3,11 +3,20 @@ package main.java.com.gestaoPatrimonio.model.repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import main.java.com.gestaoPatrimonio.model.entity.Bem;
 import main.java.com.gestaoPatrimonio.model.entity.Instituicao;
+import main.java.com.gestaoPatrimonio.model.entity.Setor;
 
 public class InstituicaoRepository {
     private List<Instituicao> instituicoes = new ArrayList<>();
+    private SetorRepository SetorRepository; // Referência para SetorRepository
+
+    // Construtor que inicializa SetorRepository
+    public InstituicaoRepository(SetorRepository setorRepository) {
+        this.SetorRepository = setorRepository;
+    }
 
     // Adiciona uma nova Instituição
     public void save(Instituicao instituicao) {
@@ -58,4 +67,47 @@ public class InstituicaoRepository {
         }
         return null;
     }
+
+    public Bem consultarBem(int id) {
+        for (Instituicao instituicao : instituicoes) {
+            for (Setor setor : instituicao.getSetores()) {
+                Optional<Bem> bemEncontrado = setor.getBens().stream()
+                        .filter(bem -> bem.getId() == id)
+                        .findFirst();
+                if (bemEncontrado.isPresent()) {
+                    return bemEncontrado.get();
+                }
+            }
+        }
+        return null;
+    }
+
+    // Atualiza um bem na instituição
+    public void atualizarBem(Bem bemAtualizado) {
+        for (Instituicao instituicao : instituicoes) {
+            for (Setor setor : instituicao.getSetores()) {
+                for (int i = 0; i < setor.getBens().size(); i++) {
+                    Bem bemExistente = setor.getBens().get(i);
+                    if (bemExistente.getId() == bemAtualizado.getId()) {
+                        setor.getBens().set(i, bemAtualizado);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    // Transfere um bem para outro setor na instituição
+    public void transferirBem(Bem bem, Setor novoSetor) {
+        for (Instituicao instituicao : instituicoes) {
+            for (Setor setor : instituicao.getSetores()) {
+                if (setor.getBens().contains(bem)) {
+                    SetorRepository.devolverBem(setor, bem); // Remove o bem do setor atual
+                    SetorRepository.receberBem(novoSetor, bem); // Adiciona o bem ao novo setor
+                    return;
+                }
+            }
+        }
+    }
+
 }
