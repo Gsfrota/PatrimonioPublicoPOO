@@ -11,7 +11,6 @@ public class SetorService {
         this.setorRepository = setorRepository;
     }
 
-    //Método parar gerar relatorio
     public void gerarRelatoriosSetor(int idSetor) {
         Setor setor = setorRepository.findById(idSetor);
         if (setor != null) {
@@ -21,7 +20,6 @@ public class SetorService {
         }
     }
 
-    // Método para receber um bem
     public void receberBem(int idSetor, Bem bem) {
         Setor setor = setorRepository.findById(idSetor);
         if (setor != null) {
@@ -31,7 +29,6 @@ public class SetorService {
         }
     }
 
-    // Método para devolver um bem
     public void devolverBem(int idSetor, Bem bem) {
         Setor setor = setorRepository.findById(idSetor);
         if (setor != null) {
@@ -41,7 +38,6 @@ public class SetorService {
         }
     }
 
-    // Método para solicitar a transferência de um bem
     public void solicitarTransferenciaBem(int idSetorOrigem, int idSetorDestino, Bem bem) {
         Setor setorOrigem = setorRepository.findById(idSetorOrigem);
         Setor setorDestino = setorRepository.findById(idSetorDestino);
@@ -51,5 +47,12 @@ public class SetorService {
             System.out.println("Um ou ambos os setores não foram encontrados.");
         }
     }
-    
+
+    public SetorRepository getSetorRepository() {
+        return setorRepository;
+    }
+
+    public void setSetorRepository(SetorRepository setorRepository) {
+        this.setorRepository = setorRepository;
+    }
 }

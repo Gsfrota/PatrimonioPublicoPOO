@@ -1,10 +1,8 @@
 package main.java.com.gestaoPatrimonio.model.repository;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import main.java.com.gestaoPatrimonio.model.entity.Setor;
 import main.java.com.gestaoPatrimonio.model.entity.Usuario;
 
@@ -14,7 +12,7 @@ public class UsuarioRepository {
 
     public void cadastrarUsuario(String login, String senha, String nome, Setor setor) {
         Usuario novoUsuario = new Usuario(nome, login, senha, setor);
-        save(novoUsuario);  // Salva o usuário na lista
+        save(novoUsuario);
     }
 
     public void save(Usuario usuario) {
@@ -41,6 +39,13 @@ public class UsuarioRepository {
                        .findFirst();
     }
 
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
 }
 
 

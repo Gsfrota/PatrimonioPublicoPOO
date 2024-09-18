@@ -4,7 +4,6 @@ package main.java.com.gestaoPatrimonio.model.repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import main.java.com.gestaoPatrimonio.model.entity.Bem;
 import main.java.com.gestaoPatrimonio.model.entity.Instituicao;
 import main.java.com.gestaoPatrimonio.model.entity.Setor;
@@ -94,12 +93,27 @@ public class InstituicaoRepository {
         for (Instituicao instituicao : instituicoes) {
             for (Setor setor : instituicao.getSetores()) {
                 if (setor.getBens().contains(bem)) {
-                    SetorRepository.devolverBem(setor, bem); // Remove o bem do setor atual
-                    SetorRepository.receberBem(novoSetor, bem); // Adiciona o bem ao novo setor
+                    SetorRepository.devolverBem(setor, bem);
+                    SetorRepository.receberBem(novoSetor, bem);
                     return;
                 }
             }
         }
     }
 
+    public List<Instituicao> getInstituicoes() {
+        return instituicoes;
+    }
+
+    public void setInstituicoes(List<Instituicao> instituicoes) {
+        this.instituicoes = instituicoes;
+    }
+
+    public SetorRepository getSetorRepository() {
+        return SetorRepository;
+    }
+
+    public void setSetorRepository(SetorRepository SetorRepository) {
+        this.SetorRepository = SetorRepository;
+    }
 }

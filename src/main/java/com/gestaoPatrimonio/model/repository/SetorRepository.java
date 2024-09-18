@@ -2,7 +2,6 @@ package main.java.com.gestaoPatrimonio.model.repository;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import main.java.com.gestaoPatrimonio.model.entity.Bem;
 import main.java.com.gestaoPatrimonio.model.entity.Setor;
 
@@ -12,7 +11,7 @@ public class SetorRepository {
     private static int idCounter = 1;
 
     public void save(Setor setor) {
-        if (setor.getId() == 0) { 
+        if (setor.getId() == 0) {
             setor.setId(idCounter++);
             setores.add(setor);
         } else {
@@ -41,7 +40,7 @@ public class SetorRepository {
     public void receberBem(Setor setor, Bem bem) {
         setor.getBens().add(bem);
         bem.setSituacao("Recebido");
-        bem.setResponsavel(null);  // Assumindo que o responsável é definido em outro lugar
+        bem.setResponsavel(null);
         System.out.println("Bem recebido: " + bem.getDescricao());
     }
 
@@ -75,4 +74,11 @@ public class SetorRepository {
         }
     }
 
+    public List<Setor> getSetores() {
+        return setores;
+    }
+
+    public void setSetores(List<Setor> setores) {
+        this.setores = setores;
+    }
 }

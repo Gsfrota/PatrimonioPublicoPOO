@@ -14,14 +14,13 @@ public class Setor {
 
     public Setor(String nome, String sigla, Usuario responsavel, String localizacao, String contato) {
         this.id = (int) (Math.random() * 1000);
-        this.setNome(nome);
-        this.setSigla(sigla);
-        this.setResponsavel(responsavel);
-        this.setLocalizacao(localizacao);
-        this.setContato(contato);
+        this.nome = nome;
+        this.sigla = sigla;
+        this.responsavel = responsavel;
+        this.localizacao = localizacao;
+        this.contato = contato;
     }
 
-    // Getters e Setters
     public int getId() {
         return id;
     }
