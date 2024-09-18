@@ -16,11 +16,9 @@ public class Usuario {
         this.nome = nome;
         this.login = login;
         this.senha = senha;
-        //this.perfil = perfil;
         this.setor = setor;
     }
 
-    // Getters e Setters
     public int getId() {
         return id;
     }

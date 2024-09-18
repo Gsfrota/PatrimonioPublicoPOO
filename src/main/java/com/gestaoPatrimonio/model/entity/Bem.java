@@ -11,7 +11,6 @@ public class Bem {
     private Usuario responsavel;
     private Setor setor;
 
-    // Construtor
     public Bem(String nome, String descricao, String tipo, String dataRegistro) {
         this.id = (int) (Math.random() * 1000);
         this.nome = nome;
@@ -21,7 +20,6 @@ public class Bem {
         this.situacao = "Novo bem";
     }
 
-    // Metodos Getters e Setters
     public int getId() {
         return id;
     }

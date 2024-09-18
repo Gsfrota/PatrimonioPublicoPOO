@@ -9,11 +9,8 @@ public class Instituicao {
     private String nome;
     private String cnpj;
 
-    // Um para muitos com Setor
     private List<Setor> setores = new ArrayList<>();
-    // Um para muitos com Usuario
     private List<Usuario> usuarios = new ArrayList<>();
-    // Um para muitos com Bem
     private List<Bem> bens = new ArrayList<>();
 
     public Instituicao(String nome, String cnpj) {
@@ -22,7 +19,6 @@ public class Instituicao {
         this.cnpj = cnpj;
     }
 
-    // Getters e Setters
     public int getId() {
         return id;
     }

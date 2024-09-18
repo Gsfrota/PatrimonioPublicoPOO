@@ -32,19 +32,23 @@ public class InstituicaoService {
         return instituicaoRepository.findByNome(nome);
     }
 
-    // Consulta um bem pelo ID na instituição
     public Bem consultarBem(int id) {
         return instituicaoRepository.consultarBem(id);
     }
 
-    // Atualiza um bem na instituição
     public void atualizarBem(Bem bemAtualizado) {
         instituicaoRepository.atualizarBem(bemAtualizado);
     }
 
-    // Transfere um bem para outro setor na instituição
     public void transferirBem(Bem bem, Setor novoSetor) {
         instituicaoRepository.transferirBem(bem, novoSetor);
     }
 
+    public InstituicaoRepository getInstituicaoRepository() {
+        return instituicaoRepository;
+    }
+
+    public void setInstituicaoRepository(InstituicaoRepository instituicaoRepository) {
+        this.instituicaoRepository = instituicaoRepository;
+    }
 }

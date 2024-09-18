@@ -4,27 +4,23 @@ package main.java.com.gestaoPatrimonio.model.repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import main.java.com.gestaoPatrimonio.model.entity.Bem;
 import main.java.com.gestaoPatrimonio.model.entity.Instituicao;
 import main.java.com.gestaoPatrimonio.model.entity.Setor;
 
 public class InstituicaoRepository {
     private List<Instituicao> instituicoes = new ArrayList<>();
-    private SetorRepository SetorRepository; // Referência para SetorRepository
+    private SetorRepository SetorRepository;
 
-    // Construtor que inicializa SetorRepository
     public InstituicaoRepository(SetorRepository setorRepository) {
         this.SetorRepository = setorRepository;
     }
 
-    // Adiciona uma nova Instituição
     public void save(Instituicao instituicao) {
         instituicoes.add(instituicao);
         System.out.println("Instituição salva com sucesso: " + instituicao.getNome());
     }
 
-    // Encontra uma Instituição por ID
     public Instituicao findById(int id) {
         for (Instituicao instituicao : instituicoes) {
             if (instituicao.getId() == id) {
@@ -34,7 +30,6 @@ public class InstituicaoRepository {
         return null;
     }
 
-    // Remove uma Instituição por ID
     public void delete(int id) {
         Instituicao instituicao = findById(id);
         if (instituicao != null) {
@@ -45,7 +40,6 @@ public class InstituicaoRepository {
         }
     }
 
-    // Atualiza uma Instituição existente
     public void update(Instituicao instituicaoAtualizada) {
         for (int i = 0; i < instituicoes.size(); i++) {
             Instituicao instituicaoExistente = instituicoes.get(i);
@@ -58,7 +52,6 @@ public class InstituicaoRepository {
         System.out.println("Instituição com ID " + instituicaoAtualizada.getId() + " não encontrada para atualização.");
     }
 
-    // Encontra uma Instituição por nome
     public Instituicao findByNome(String nome) {
         for (Instituicao instituicao : instituicoes) {
             if (instituicao.getNome().equalsIgnoreCase(nome)) {
@@ -82,7 +75,6 @@ public class InstituicaoRepository {
         return null;
     }
 
-    // Atualiza um bem na instituição
     public void atualizarBem(Bem bemAtualizado) {
         for (Instituicao instituicao : instituicoes) {
             for (Setor setor : instituicao.getSetores()) {
@@ -97,17 +89,31 @@ public class InstituicaoRepository {
         }
     }
 
-    // Transfere um bem para outro setor na instituição
     public void transferirBem(Bem bem, Setor novoSetor) {
         for (Instituicao instituicao : instituicoes) {
             for (Setor setor : instituicao.getSetores()) {
                 if (setor.getBens().contains(bem)) {
-                    SetorRepository.devolverBem(setor, bem); // Remove o bem do setor atual
-                    SetorRepository.receberBem(novoSetor, bem); // Adiciona o bem ao novo setor
+                    SetorRepository.devolverBem(setor, bem);
+                    SetorRepository.receberBem(novoSetor, bem);
                     return;
                 }
             }
         }
     }
 
+    public List<Instituicao> getInstituicoes() {
+        return instituicoes;
+    }
+
+    public void setInstituicoes(List<Instituicao> instituicoes) {
+        this.instituicoes = instituicoes;
+    }
+
+    public SetorRepository getSetorRepository() {
+        return SetorRepository;
+    }
+
+    public void setSetorRepository(SetorRepository SetorRepository) {
+        this.SetorRepository = SetorRepository;
+    }
 }
