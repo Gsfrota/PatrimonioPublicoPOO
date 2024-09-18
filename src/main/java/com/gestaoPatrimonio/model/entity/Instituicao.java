@@ -16,7 +16,7 @@ public class Instituicao {
     // Um para muitos com Bem
     private List<Bem> bens = new ArrayList<>();
 
-    public Instituicao(String nome, String cnpj) {
+    public Instituicao() {
         this.id = (int) (Math.random() * 1000);
         this.nome = nome;
         this.cnpj = cnpj;
