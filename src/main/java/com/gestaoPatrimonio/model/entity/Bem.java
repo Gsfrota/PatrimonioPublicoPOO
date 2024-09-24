@@ -127,4 +127,8 @@ public class Bem {
     public String toString() {
         return String.format("Novo bem %s criado!%nTipo: %s%nID: %d%nData da aquisição: %s%nSituação: %s%nDescrição: %s%n", nome, tipo, id, dataRegistro, situacao, descricao);
     }
+
+    void setLocalizacao(String localizacao) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
